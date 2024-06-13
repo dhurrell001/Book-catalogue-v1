@@ -59,4 +59,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize the form in add mode
   //   setFormMode("add");
+  console.log("hi");
 });
