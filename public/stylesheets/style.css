@@ -1,0 +1,65 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: navy;
+}
+
+a {
+  color: #00b7ff;
+}
+
+.main-image {
+  display: flex;
+
+  justify-content: center;
+}
+.main-image img {
+  width: 35%;
+}
+h1 {
+  text-align: center;
+  width: 100%; /* Ensures the h1 takes up the full width of its container */
+}
+.main-container {
+  background-color: ivory;
+  width: 70%;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
+.input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  height: auto;
+}
+.input-area input {
+  height: 10vh;
+  width: 50%;
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.menu ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  /* background-color: aqua; */
+  height: 7vh;
+}
+.menu {
+  margin-left: auto;
+  margin-right: auto;
+  /* height: 100px; */
+  width: 80%;
+}
+.menu button,
+.input-area button {
+  width: 20%;
+  height: 100%;
+  background-color: navy;
+  color: ivory;
+}
