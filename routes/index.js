@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var fs = require("fs");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -7,15 +8,16 @@ router.get("/", function (req, res, next) {
 });
 
 module.exports = router;
+
 router.post("/add", (req, res) => {
   const book = req.body;
-  FileSystem.readFile("books.json", "utf8", (err, data) => {
+  fs.readFile("books.json", "utf8", (err, data) => {
     if (err) {
       return res.status(500).send("error reading books file");
     }
     const books = JSON.parse(data || "[]");
-    book.push(book);
-    FileSystem.writeFile("books.json", JSON.stringify(books), (err) => {
+    books.push(book);
+    fs.writeFile("books.json", JSON.stringify(books), (err) => {
       if (err) {
         return res.status(500).send("error saving book");
       }
