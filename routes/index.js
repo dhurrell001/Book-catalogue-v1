@@ -25,3 +25,12 @@ router.post("/add", (req, res) => {
     });
   });
 });
+router.get("/list", (req, res) => {
+  fs.readFile(booksFilePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading books file:", err);
+      return res.status(500).send("Error reading books file");
+    }
+    res.send(data);
+  });
+});
