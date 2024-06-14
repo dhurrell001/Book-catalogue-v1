@@ -7,6 +7,9 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Book Catalogue" });
 });
 
+router.get("/listBooks", function (req, res, next) {
+  res.render("listBook", { title: "Book Catalogue" });
+});
 module.exports = router;
 
 router.post("/add", (req, res) => {
@@ -26,7 +29,7 @@ router.post("/add", (req, res) => {
   });
 });
 router.get("/list", (req, res) => {
-  fs.readFile(booksFilePath, "utf8", (err, data) => {
+  fs.readFile("books.json", "utf8", (err, data) => {
     if (err) {
       console.error("Error reading books file:", err);
       return res.status(500).send("Error reading books file");

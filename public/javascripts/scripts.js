@@ -58,8 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "none";
         submitButton.textContent = "List Books";
         submitButton.onclick = () => {
-          // Your list books logic here
-          console.log("Listing books");
+          fetch("/list", {
+            method: "GET",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              alert(JSON.stringify(data, null, 2));
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Error: " + error.message);
+            });
         };
         break;
       case "remove":
