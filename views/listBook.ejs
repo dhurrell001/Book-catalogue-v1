@@ -18,6 +18,17 @@
           <button id="remove-book">Remove Book</button>
         </ul>
       </div>
+      <div id="booksList">
+        <ul>
+          <% books.forEach((book) => { %>
+          <li>
+            <strong>Author:</strong> <%= book.author %> -
+            <strong>Title:</strong> <%= book.title %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+      <a href="/">Go back to home</a>
     </div>
     <script src="\javascripts\scripts.js"></script>
   </body>

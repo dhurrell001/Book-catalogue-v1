@@ -29,7 +29,8 @@ h1 {
   margin-right: auto;
   padding-top: 10px;
 }
-.input-area {
+.input-area,
+#booksList {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,12 +55,17 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   /* height: 100px; */
-  width: 80%;
+  width: 50%;
 }
 .menu button,
-.input-area button {
+.input-area button,
+#list-books {
   width: 20%;
   height: 100%;
   background-color: navy;
   color: ivory;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
 }

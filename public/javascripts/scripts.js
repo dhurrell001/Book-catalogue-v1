@@ -52,26 +52,26 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Adding book:", authorInput.value, titleInput.value);
         };
         break;
-      case "list":
-        message.textContent = "Listing all books:";
-        authorInput.style.display = "none";
-        titleInput.style.display = "none";
-        submitButton.textContent = "List Books";
-        submitButton.onclick = () => {
-          fetch("/list", {
-            method: "GET",
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              alert(JSON.stringify(data, null, 2));
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Error: " + error.message);
-            });
-        };
-        break;
+      // case "list":
+      //   message.textContent = "Listing all books:";
+      //   authorInput.style.display = "none";
+      //   titleInput.style.display = "none";
+      //   submitButton.textContent = "List Books";
+      //   submitButton.onclick = () => {
+      //     fetch("/list", {
+      //       method: "GET",
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         console.log(data);
+      //         alert(JSON.stringify(data, null, 2));
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error:", error);
+      //         alert("Error: " + error.message);
+      //       });
+      //   };
+      //   break;
       case "remove":
         message.textContent = "Remove a book:";
         authorInput.style.display = "block";

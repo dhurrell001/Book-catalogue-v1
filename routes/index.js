@@ -34,6 +34,7 @@ router.get("/list", (req, res) => {
       console.error("Error reading books file:", err);
       return res.status(500).send("Error reading books file");
     }
-    res.send(data);
+    const books = JSON.parse(data || "[]");
+    res.render("listBook", { title: "List of Books", books: books });
   });
 });
