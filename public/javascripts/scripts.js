@@ -30,17 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "block";
         submitButton.textContent = "Add Book";
         submitButton.onclick = () => {
-          const book = { author: authorInput.value, title: titleInput.value };
+          const book = { author: authorInput.value, title: titleInput.value }; // create book object from DOM element
+          // send a fetch request to /add route in index.js
           fetch("/add", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(book),
+            body: JSON.stringify(book), // turn book object into json format
           })
-            .then((response) => response.text())
+            // convert the response from /add route to text
+            .then((response) => response.text()) // parse response
+            // Log the result to console and display it in an alert box; the response is passed as a data parameter
+
             .then((data) => {
               console.log(data);
               alert(data);
             })
+            // handle errors in the fetch request
             .catch((error) => {
               console.error("error", error);
             });
