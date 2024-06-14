@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.getElementById("add-book");
   const listButton = document.getElementById("list-books");
@@ -28,7 +30,20 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "block";
         submitButton.textContent = "Add Book";
         submitButton.onclick = () => {
-          // Your add book logic here
+          const book = { author: authorInput.value, title: titleInput.value };
+          fetch("/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book),
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data);
+              alert(data);
+            })
+            .catch((error) => {
+              console.error("error", error);
+            });
           console.log("Adding book:", authorInput.value, titleInput.value);
         };
         break;
@@ -59,5 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize the form in add mode
   //   setFormMode("add");
-  console.log("hi");
 });
