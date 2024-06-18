@@ -34,6 +34,26 @@ router.get("/list", (req, res) => {
       console.error("Error reading books file:", err);
       return res.status(500).send("Error reading books file");
     }
-    res.send(data);
+    const books = JSON.parse(data || "[]");
+    res.render("listBook", { title: "List of Books", books: books });
+  });
+});
+
+router.delete("/delete", (req, res) => {
+  const { author, title } = req.body;
+  fs.readFile("books.json", "utf8", (err, data) => {
+    if (err) {
+      return res.status(500).send("error reading books file");
+    }
+    let books = JSON.parse(data || "[]");
+    books = books.filter(
+      (book) => book.author !== author || book.title !== title
+    );
+    fs.writeFile("books.json", JSON.stringify(books), (err) => {
+      if (err) {
+        return res.status(500).send("error saving book");
+      }
+      res.send("Book removed");
+    });
   });
 });

@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const submitButton = document.getElementById("submit");
 
-  alert("kkk");
   addButton.addEventListener("click", () => {
     setFormMode("add");
   });
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             .then((data) => {
               console.log(data);
-              alert(data);
             })
             // handle errors in the fetch request
             .catch((error) => {
@@ -52,33 +50,47 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Adding book:", authorInput.value, titleInput.value);
         };
         break;
-      case "list":
-        message.textContent = "Listing all books:";
-        authorInput.style.display = "none";
-        titleInput.style.display = "none";
-        submitButton.textContent = "List Books";
-        submitButton.onclick = () => {
-          fetch("/list", {
-            method: "GET",
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              alert(JSON.stringify(data, null, 2));
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Error: " + error.message);
-            });
-        };
-        break;
+      // case "list":
+      //   message.textContent = "Listing all books:";
+      //   authorInput.style.display = "none";
+      //   titleInput.style.display = "none";
+      //   submitButton.textContent = "List Books";
+      //   submitButton.onclick = () => {
+      //     fetch("/list", {
+      //       method: "GET",
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         console.log(data);
+      //         alert(JSON.stringify(data, null, 2));
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error:", error);
+      //         alert("Error: " + error.message);
+      //       });
+      //   };
+      //   break;
       case "remove":
         message.textContent = "Remove a book:";
         authorInput.style.display = "block";
         titleInput.style.display = "block";
         submitButton.textContent = "Remove Book";
         submitButton.onclick = () => {
+          const book = { author: authorInput.value, title: titleInput.value };
           // Your remove book logic here
+          fetch("/delete", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book),
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("error", error);
+            });
+
           console.log("Removing book:", authorInput.value, titleInput.value);
         };
         break;
@@ -86,7 +98,4 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
     }
   }
-
-  // Initialize the form in add mode
-  //   setFormMode("add");
 });

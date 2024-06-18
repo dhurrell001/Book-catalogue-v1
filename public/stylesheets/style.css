@@ -2,42 +2,50 @@ body {
   padding: 0px;
   margin: 0px;
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: navy;
+  background-color: rgb(0, 0, 59);
+  font-family: "Times New Roman", Times, serif;
 }
 
 a {
   color: #00b7ff;
 }
-
+#main-heading {
+  background-color: white;
+  padding-top: 10px;
+  margin: 2px;
+}
 .main-image {
   display: flex;
-
+  margin-top: 3vh;
   justify-content: center;
 }
 .main-image img {
-  width: 35%;
+  width: 30%;
 }
 h1 {
   text-align: center;
   width: 100%; /* Ensures the h1 takes up the full width of its container */
+  margin: 10px;
 }
 .main-container {
-  background-color: ivory;
+  background-color: linen;
   width: 70%;
   height: 100vh;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10px;
+  /* padding-top: 10px; */
+  box-shadow: 0 4px 8px rgba(250, 247, 247, 0.1); /* Added shadow to book items */
 }
-.input-area {
+.input-area,
+#booksList {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px;
   height: auto;
 }
 .input-area input {
-  height: 10vh;
+  height: 7vh;
   width: 50%;
   font-size: 22px;
   margin-top: 5px;
@@ -54,12 +62,21 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   /* height: 100px; */
-  width: 80%;
+  width: 50%;
 }
 .menu button,
-.input-area button {
+.input-area button,
+#list-books {
   width: 20%;
   height: 100%;
-  background-color: navy;
+  background-color: darkblue;
   color: ivory;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow to book items */
+}
+#book-items {
+  font-size: 21px;
 }
