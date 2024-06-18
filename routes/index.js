@@ -38,3 +38,22 @@ router.get("/list", (req, res) => {
     res.render("listBook", { title: "List of Books", books: books });
   });
 });
+
+router.delete("/delete", (req, res) => {
+  const { author, title } = req.body;
+  fs.readFile("books.json", "utf8", (err, data) => {
+    if (err) {
+      return res.status(500).send("error reading books file");
+    }
+    let books = JSON.parse(data || "[]");
+    books = books.filter(
+      (book) => book.author !== author || book.title !== title
+    );
+    fs.writeFile("books.json", JSON.stringify(books), (err) => {
+      if (err) {
+        return res.status(500).send("error saving book");
+      }
+      res.send("Book removed");
+    });
+  });
+});

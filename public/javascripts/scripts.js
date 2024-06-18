@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const submitButton = document.getElementById("submit");
 
-  alert("kkk");
   addButton.addEventListener("click", () => {
     setFormMode("add");
   });
@@ -43,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             .then((data) => {
               console.log(data);
-              alert(data);
             })
             // handle errors in the fetch request
             .catch((error) => {
@@ -78,7 +76,21 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "block";
         submitButton.textContent = "Remove Book";
         submitButton.onclick = () => {
+          const book = { author: authorInput.value, title: titleInput.value };
           // Your remove book logic here
+          fetch("/delete", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book),
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("error", error);
+            });
+
           console.log("Removing book:", authorInput.value, titleInput.value);
         };
         break;
@@ -86,7 +98,4 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
     }
   }
-
-  // Initialize the form in add mode
-  //   setFormMode("add");
 });
