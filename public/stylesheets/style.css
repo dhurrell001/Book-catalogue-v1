@@ -64,9 +64,19 @@ h1 {
   /* height: 100px; */
   width: 50%;
 }
+.main-button-container {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  /* height: 100px; */
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
 .menu button,
 .input-area button,
-#list-books {
+#list-books,
+#return-home {
   width: 20%;
   height: 100%;
   background-color: darkblue;
