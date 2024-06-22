@@ -1,59 +1,54 @@
-var express = require("express");
-var router = express.Router();
-var fs = require("fs");
+const express = require("express");
+const router = express.Router();
+const Book = require("../models/book"); // Import the Book model
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Book Catalogue" });
 });
 
-router.get("/listBooks", function (req, res, next) {
-  res.render("listBook", { title: "Book Catalogue" });
-});
-module.exports = router;
-
-router.post("/add", (req, res) => {
-  const book = req.body;
-  fs.readFile("books.json", "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).send("error reading books file");
-    }
-    const books = JSON.parse(data || "[]");
-    books.push(book);
-    fs.writeFile("books.json", JSON.stringify(books), (err) => {
-      if (err) {
-        return res.status(500).send("error saving book");
-      }
-      res.send("Book added");
-    });
-  });
-});
-router.get("/list", (req, res) => {
-  fs.readFile("books.json", "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading books file:", err);
-      return res.status(500).send("Error reading books file");
-    }
-    const books = JSON.parse(data || "[]");
+/* GET list of books. */
+router.get("/list", async function (req, res, next) {
+  try {
+    const books = await Book.findAll(); // Fetch all books
     res.render("listBook", { title: "List of Books", books: books });
-  });
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    res.status(500).send("Error fetching books");
+  }
 });
 
-router.delete("/delete", (req, res) => {
+/* POST add a new book. */
+router.post("/add", async (req, res) => {
   const { author, title } = req.body;
-  fs.readFile("books.json", "utf8", (err, data) => {
-    if (err) {
-      return res.status(500).send("error reading books file");
-    }
-    let books = JSON.parse(data || "[]");
-    books = books.filter(
-      (book) => book.author !== author || book.title !== title
-    );
-    fs.writeFile("books.json", JSON.stringify(books), (err) => {
-      if (err) {
-        return res.status(500).send("error saving book");
-      }
-      res.send("Book removed");
-    });
-  });
+  try {
+    await Book.create({ author, title }); // Create a new book record
+    res.send("Book added");
+  } catch (error) {
+    console.error("Error adding book:", error);
+    res.status(500).send("Error adding book");
+  }
 });
+
+/* DELETE remove a book. */
+router.delete("/delete", async (req, res) => {
+  const { author, title } = req.body;
+  try {
+    const result = await Book.destroy({
+      where: {
+        author: author,
+        title: title,
+      },
+    });
+    if (result === 0) {
+      res.status(404).send("Book not found");
+    } else {
+      res.send("Book removed");
+    }
+  } catch (error) {
+    console.error("Error removing book:", error);
+    res.status(500).send("Error removing book");
+  }
+});
+
+module.exports = router;

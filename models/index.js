@@ -1,4 +1,4 @@
-// models/index.js
+// Create connection to database
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize({
   dialect: "sqlite",

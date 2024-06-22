@@ -1,4 +1,4 @@
-// models/book.js
+// Create book model, this will be synced as a table in database
 const { DataTypes } = require("sequelize");
 const sequelize = require("./index");
 
