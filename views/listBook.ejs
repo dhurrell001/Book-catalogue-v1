@@ -6,18 +6,14 @@
   </head>
   <body>
     <div class="main-container">
-      <h1><%= title %></h1>
+      <div id="main-heading">
+        <h1><%= title %></h1>
+        <hr />
+      </div>
       <div class="main-image">
         <img src="/images/book.jpg" />
       </div>
 
-      <div class="menu">
-        <ul>
-          <button id="add-book">Add Book</button>
-          <button id="list-books">List Books</button>
-          <button id="remove-book">Remove Book</button>
-        </ul>
-      </div>
       <div id="booksList">
         <ul>
           <% books.forEach((book) => { %>

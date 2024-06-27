@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => response.text())
             .then((data) => {
               console.log(data);
+              alert(data);
             })
             .catch((error) => {
               console.error("error", error);
