@@ -29,7 +29,10 @@ router.post("/add", async (req, res) => {
     res.status(500).send("Error adding book");
   }
 });
-
+router.get("/search", async (req, res) => {
+  const author = req.query;
+  res.send(`this is in the server route, search for book ${author}`);
+});
 /* DELETE remove a book. */
 router.delete("/delete", async (req, res) => {
   const { author, title } = req.body;

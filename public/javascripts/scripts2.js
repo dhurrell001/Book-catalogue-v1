@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.getElementById("add-book");
   const listButton = document.getElementById("list-books");
   const removeButton = document.getElementById("remove-book");
+  const searchButton = document.getElementById("search-book");
   const message = document.getElementById("status-message");
   const authorInput = document.getElementById("author");
   const titleInput = document.getElementById("title");
@@ -12,7 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   addButton.addEventListener("click", () => {
     setFormMode("add");
   });
-
+  searchButton.addEventListener("click", () => {
+    alert("in handler");
+    setFormMode("search");
+  });
   listButton.addEventListener("click", () => {
     setFormMode("list");
   });
@@ -92,6 +96,31 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
           console.log("Removing book:", authorInput.value, titleInput.value);
+        };
+        break;
+      case "search":
+        alert("here");
+        message.textContent = "search books:";
+        authorInput.style.display = "block";
+        titleInput.style.display = "block";
+        submitButton.textContent = "Search";
+        submitButton.onclick = () => {
+          const author = authorInput.value;
+          const title = titleInput.value;
+
+          fetch(`/search?author = ${author}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("error", error);
+            });
+
+          console.log("Search for book:", authorInput.value, titleInput.value);
         };
         break;
       default:

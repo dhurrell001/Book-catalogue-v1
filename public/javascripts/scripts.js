@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.getElementById("add-book");
   const listButton = document.getElementById("list-books");
   const removeButton = document.getElementById("remove-book");
+  const searchButton = document.getElementById("search-book");
   const message = document.getElementById("status-message");
   const authorInput = document.getElementById("author");
   const titleInput = document.getElementById("title");
@@ -12,7 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
   addButton.addEventListener("click", () => {
     setFormMode("add");
   });
-
+  searchButton.addEventListener("click", () => {
+    alert("in handler");
+    setFormMode("search");
+  });
   listButton.addEventListener("click", () => {
     setFormMode("list");
   });
@@ -42,7 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             .then((data) => {
               console.log(data);
-              alert(data);
             })
             // handle errors in the fetch request
             .catch((error) => {
@@ -51,7 +54,26 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Adding book:", authorInput.value, titleInput.value);
         };
         break;
-
+      // case "list":
+      //   message.textContent = "Listing all books:";
+      //   authorInput.style.display = "none";
+      //   titleInput.style.display = "none";
+      //   submitButton.textContent = "List Books";
+      //   submitButton.onclick = () => {
+      //     fetch("/list", {
+      //       method: "GET",
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         console.log(data);
+      //         alert(JSON.stringify(data, null, 2));
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error:", error);
+      //         alert("Error: " + error.message);
+      //       });
+      //   };
+      //   break;
       case "remove":
         message.textContent = "Remove a book:";
         authorInput.style.display = "block";
@@ -59,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.textContent = "Remove Book";
         submitButton.onclick = () => {
           const book = { author: authorInput.value, title: titleInput.value };
-
+          // Your remove book logic here
           fetch("/delete", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -68,13 +90,37 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => response.text())
             .then((data) => {
               console.log(data);
-              alert(data);
             })
             .catch((error) => {
               console.error("error", error);
             });
 
           console.log("Removing book:", authorInput.value, titleInput.value);
+        };
+        break;
+      case "search":
+        alert("here");
+        message.textContent = "search books:";
+        authorInput.style.display = "block";
+        titleInput.style.display = "block";
+        submitButton.textContent = "Search";
+        submitButton.onclick = () => {
+          const author = authorInput.value;
+          const title = titleInput.value;
+
+          fetch(`/search?author = ${author}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("error", error);
+            });
+
+          console.log("Search for book:", authorInput.value, titleInput.value);
         };
         break;
       default:
