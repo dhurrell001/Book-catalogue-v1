@@ -32,7 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "block";
         submitButton.textContent = "Add Book";
         submitButton.onclick = () => {
-          const book = { author: authorInput.value, title: titleInput.value }; // create book object from DOM element
+          const author = authorInput.value;
+          const title = titleInput.value;
+          // check if author and title fields are not blank
+          if (author === "" || title === "") {
+            alert("Please enter both author and title.");
+            return;
+          }
+          const book = { author, title }; // create book object from DOM element
           // send a fetch request to /add route in index.js
           fetch("/add", {
             method: "POST",
@@ -98,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         break;
       case "search":
-        alert("here");
         message.textContent = "search books:";
         authorInput.style.display = "block";
         titleInput.style.display = "block";

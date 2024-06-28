@@ -15,14 +15,15 @@
       </div>
 
       <div id="booksList">
+        <% if (books.length) { %>
         <ul>
-          <% books.forEach((book) => { %>
-          <li id="book-items">
-            <strong>Author:</strong> <%= book.author %> -
-            <strong>Title:</strong> <%= book.title %>
-          </li>
-          <% }) %>
+          <% books.forEach(function(book) { %>
+          <li id="book-items"><%= book.title %> by <%= book.author %></li>
+          <% }); %>
         </ul>
+        <% } else { %>
+        <p>No books found for the specified author.</p>
+        <% } %>
       </div>
       <div class="main-button-container">
         <a id="return-home" href="/">Go back to home</a>

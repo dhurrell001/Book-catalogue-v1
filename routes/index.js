@@ -30,14 +30,17 @@ router.post("/add", async (req, res) => {
   }
 });
 router.get("/search", async (req, res) => {
+  // get author from parameter sent via url.
   const author = req.query.author;
-  //   res.send(`this is in the server route, search for book ${author}`);
   console.log(author);
   try {
     const books = await Book.findAll({ where: { author: author } });
     console.log("searching for book ", author);
-    res.render("listBook", { title: "Search Resultd", books: books });
-    // res.json(books);
+    if (books.length === 0) {
+      console.log("No book found");
+    }
+    // No books found message is handled in EJS template.
+    res.render("listBook", { title: "Search Results", books: books });
   } catch (error) {
     console.error("Error searching for books");
     res.status(500).json({ error: "Error searching for books" });
