@@ -36,7 +36,8 @@ router.get("/search", async (req, res) => {
   try {
     const books = await Book.findAll({ where: { author: author } });
     console.log("searching for book ", author);
-    res.json(books);
+    res.render("listBook", { title: "Search Resultd", books: books });
+    // res.json(books);
   } catch (error) {
     console.error("Error searching for books");
     res.status(500).json({ error: "Error searching for books" });

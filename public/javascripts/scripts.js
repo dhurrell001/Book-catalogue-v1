@@ -108,18 +108,20 @@ document.addEventListener("DOMContentLoaded", () => {
           const title = titleInput.value;
           // important to use encodedURIComponent. This sends the author field contents as part of URL
           // so it can be extracted server side and used as part of DB search query.
-          fetch(`/search?author=${encodeURIComponent(author)}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-            })
-            .catch((error) => {
-              console.error("error", error);
-              alert(error.message);
-            });
+          //   fetch(`/search?author=${encodeURIComponent(author)}`, {
+          //     method: "GET",
+          //     headers: { "Content-Type": "application/json" },
+          //   })
+          //     .then((response) => response.json())
+          //     .then((data) => {
+          //       console.log(data);
+          //     })
+          //     .catch((error) => {
+          //       console.error("error", error);
+          //       alert(error.message);
+          //     });
+          // Redirect to the search endpoint
+          window.location.href = `/search?author=${encodeURIComponent(author)}`;
 
           console.log("Search for book:", authorInput.value, titleInput.value);
         };
