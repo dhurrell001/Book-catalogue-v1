@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setFormMode("add");
   });
   searchButton.addEventListener("click", () => {
-    alert("in handler");
     setFormMode("search");
   });
   listButton.addEventListener("click", () => {
@@ -107,17 +106,19 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.onclick = () => {
           const author = authorInput.value;
           const title = titleInput.value;
-
-          fetch(`/search?author = ${author}`, {
+          // important to use encodedURIComponent. This sends the author field contents as part of URL
+          // so it can be extracted server side and used as part of DB search query.
+          fetch(`/search?author=${encodeURIComponent(author)}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
           })
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((data) => {
               console.log(data);
             })
             .catch((error) => {
               console.error("error", error);
+              alert(error.message);
             });
 
           console.log("Search for book:", authorInput.value, titleInput.value);

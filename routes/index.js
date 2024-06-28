@@ -30,8 +30,17 @@ router.post("/add", async (req, res) => {
   }
 });
 router.get("/search", async (req, res) => {
-  const author = req.query;
-  res.send(`this is in the server route, search for book ${author}`);
+  const author = req.query.author;
+  //   res.send(`this is in the server route, search for book ${author}`);
+  console.log(author);
+  try {
+    const books = await Book.findAll({ where: { author: author } });
+    console.log("searching for book ", author);
+    res.json(books);
+  } catch (error) {
+    console.error("Error searching for books");
+    res.status(500).json({ error: "Error searching for books" });
+  }
 });
 /* DELETE remove a book. */
 router.delete("/delete", async (req, res) => {
