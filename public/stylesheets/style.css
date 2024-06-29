@@ -32,7 +32,7 @@ h1 {
 .main-container {
   background-color: linen;
   width: 70%;
-  height: 100vh;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   /* padding-top: 10px; */
@@ -60,6 +60,9 @@ h1 {
   /* background-color: aqua; */
   height: 7vh;
 }
+#booksList li {
+  list-style-type: none;
+}
 .menu {
   margin-left: auto;
   margin-right: auto;
@@ -75,10 +78,20 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+#submit {
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+#return-home {
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
 .menu button,
 .input-area button,
 #list-books,
 #return-home {
+  margin-top: 1%;
+  margin-bottom: 2%;
   width: 20%;
   height: 100%;
   background-color: darkblue;

@@ -57,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch((error) => {
               console.error("error", error);
             });
-          console.log("Adding book:", authorInput.value, titleInput.value);
+          alert(
+            `Adding book: Author :${authorInput.value} Title: ${titleInput.value}`
+          );
         };
         break;
       // case "list":
@@ -86,8 +88,14 @@ document.addEventListener("DOMContentLoaded", () => {
         titleInput.style.display = "block";
         submitButton.textContent = "Remove Book";
         submitButton.onclick = () => {
-          const book = { author: authorInput.value, title: titleInput.value };
-          // Your remove book logic here
+          const author = authorInput.value;
+          const title = titleInput.value;
+          // check if author and title fields are not blank
+          if (author === "" || title === "") {
+            alert("Please enter both author and title.");
+            return;
+          }
+          const book = { author, title }; // create book object from DOM element
           fetch("/delete", {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -101,13 +109,15 @@ document.addEventListener("DOMContentLoaded", () => {
               console.error("error", error);
             });
 
-          console.log("Removing book:", authorInput.value, titleInput.value);
+          alert(
+            `Removing book: Author :${authorInput.value} Title: ${titleInput.value}`
+          );
         };
         break;
       case "search":
         message.textContent = "search books:";
         authorInput.style.display = "block";
-        titleInput.style.display = "block";
+        titleInput.style.display = "hide";
         submitButton.textContent = "Search";
         submitButton.onclick = () => {
           const author = authorInput.value;
