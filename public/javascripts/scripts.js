@@ -1,5 +1,5 @@
 // const { response } = require("express");
-
+// Get elements from browser documents
 document.addEventListener("DOMContentLoaded", () => {
   const addButton = document.getElementById("add-book");
   const listButton = document.getElementById("list-books");
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const submitButton = document.getElementById("submit");
 
+  // Add event listeners to elements
   addButton.addEventListener("click", () => {
     setFormMode("add");
   });
@@ -62,26 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         };
         break;
-      // case "list":
-      //   message.textContent = "Listing all books:";
-      //   authorInput.style.display = "none";
-      //   titleInput.style.display = "none";
-      //   submitButton.textContent = "List Books";
-      //   submitButton.onclick = () => {
-      //     fetch("/list", {
-      //       method: "GET",
-      //     })
-      //       .then((response) => response.json())
-      //       .then((data) => {
-      //         console.log(data);
-      //         alert(JSON.stringify(data, null, 2));
-      //       })
-      //       .catch((error) => {
-      //         console.error("Error:", error);
-      //         alert("Error: " + error.message);
-      //       });
-      //   };
-      //   break;
+
       case "remove":
         message.textContent = "Remove a book:";
         authorInput.style.display = "block";
@@ -115,31 +97,22 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         break;
       case "search":
-        message.textContent = "search books:";
+        message.textContent = "Search for books:";
         authorInput.style.display = "block";
         titleInput.style.display = "hide";
         submitButton.textContent = "Search";
         submitButton.onclick = () => {
-          const author = authorInput.value;
-          const title = titleInput.value;
-          // important to use encodedURIComponent. This sends the author field contents as part of URL
-          // so it can be extracted server side and used as part of DB search query.
-          //   fetch(`/search?author=${encodeURIComponent(author)}`, {
-          //     method: "GET",
-          //     headers: { "Content-Type": "application/json" },
-          //   })
-          //     .then((response) => response.json())
-          //     .then((data) => {
-          //       console.log(data);
-          //     })
-          //     .catch((error) => {
-          //       console.error("error", error);
-          //       alert(error.message);
-          //     });
-          // Redirect to the search endpoint
-          window.location.href = `/search?author=${encodeURIComponent(author)}`;
-
-          console.log("Search for book:", authorInput.value, titleInput.value);
+          const author = authorInput.value.toLowerCase();
+          const title = titleInput.value.toLowerCase();
+          if (author === "" && title === "") {
+            displayError("Please enter either author or title.");
+            return;
+          }
+          const query = [];
+          if (author) query.push(`author=${encodeURIComponent(author)}`);
+          if (title) query.push(`title=${encodeURIComponent(title)}`);
+          const queryString = query.join("&");
+          window.location.href = `/search?${queryString}`;
         };
         break;
       default:

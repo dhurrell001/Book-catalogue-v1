@@ -94,14 +94,18 @@ h1 {
   margin-bottom: 2%;
   width: 20%;
   height: 100%;
-  background-color: darkblue;
+  background-color: rgb(90, 87, 87);
   color: ivory;
   align-content: center;
   justify-content: center;
   text-align: center;
   text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow to book items */
+  box-shadow: 0 4px 8px rgb(167, 166, 166); /* Added shadow to book items */
+  border-radius: 5px;
 }
 #book-items {
   font-size: 21px;
+}
+#status-message {
+  font-size: 22px;
 }
