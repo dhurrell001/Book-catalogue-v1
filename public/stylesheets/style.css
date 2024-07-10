@@ -30,7 +30,7 @@ h1 {
   margin: 10px;
 }
 .main-container {
-  background-color: linen;
+  background-color: rgb(245, 237, 237);
   width: 70%;
   height: auto;
   margin-left: auto;
@@ -48,7 +48,7 @@ h1 {
 }
 .input-area input {
   height: 7vh;
-  width: 50%;
+  width: 40%;
   font-size: 22px;
   margin-top: 5px;
   margin-bottom: 10px;

@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const authorInput = document.getElementById("author");
   const titleInput = document.getElementById("title");
   const submitButton = document.getElementById("submit");
+  const mainBody = document.querySelector("body");
 
   // Add event listeners to elements
   addButton.addEventListener("click", () => {
@@ -24,7 +25,18 @@ document.addEventListener("DOMContentLoaded", () => {
   removeButton.addEventListener("click", () => {
     setFormMode("remove");
   });
-
+  function successMessage() {
+    // Alerts user of succesful operation by changing background color and status message
+    const orignalMessage = message.textContent;
+    const originalBackgroundColour = mainBody.style.backgroundColor;
+    message.textContent = "Success";
+    mainBody.style.backgroundColor = "green";
+    // Change back to original color and message after 1 second
+    setTimeout(() => {
+      mainBody.style.backgroundColor = originalBackgroundColour;
+      message.textContent = orignalMessage;
+    }, 1000);
+  }
   function setFormMode(mode) {
     switch (mode) {
       case "add":
@@ -53,14 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             .then((data) => {
               console.log(data);
+              successMessage();
             })
             // handle errors in the fetch request
             .catch((error) => {
               console.error("error", error);
             });
-          alert(
-            `Adding book: Author :${authorInput.value} Title: ${titleInput.value}`
-          );
         };
         break;
 
@@ -104,14 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.onclick = () => {
           const author = authorInput.value.toLowerCase();
           const title = titleInput.value.toLowerCase();
+          //Check to make both author and title are not empty.
           if (author === "" && title === "") {
-            displayError("Please enter either author or title.");
+            alert("Please enter either author or title.");
             return;
           }
+          // initialise list for story query string
           const query = [];
-          if (author) query.push(`author=${encodeURIComponent(author)}`);
-          if (title) query.push(`title=${encodeURIComponent(title)}`);
-          const queryString = query.join("&");
+          if (author) query.push(`author=${encodeURIComponent(author)}`); // if author exists add to query list
+          if (title) query.push(`title=${encodeURIComponent(title)}`); // if title exists add to query list
+          const queryString = query.join("&"); //join title and author together with an ampersand for correct query formatting
           window.location.href = `/search?${queryString}`;
         };
         break;
