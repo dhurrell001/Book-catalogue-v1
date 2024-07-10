@@ -6,27 +6,24 @@
   </head>
   <body>
     <div class="main-container">
-      <h1><%= title %></h1>
+      <div id="main-heading">
+        <h1><%= title %></h1>
+        <hr />
+      </div>
       <div class="main-image">
-        <img src="/images/book.jpg" />
+        <img src="/images/stacked_books.png" />
       </div>
 
-      <div class="menu">
-        <ul>
-          <button id="add-book">Add Book</button>
-          <button id="list-books">List Books</button>
-          <button id="remove-book">Remove Book</button>
-        </ul>
-      </div>
       <div id="booksList">
+        <% if (books.length) { %>
         <ul>
-          <% books.forEach((book) => { %>
-          <li id="book-items">
-            <strong>Author:</strong> <%= book.author %> -
-            <strong>Title:</strong> <%= book.title %>
-          </li>
-          <% }) %>
+          <% books.forEach(function(book) { %>
+          <li id="book-items"><%= book.title %> by <%= book.author %></li>
+          <% }); %>
         </ul>
+        <% } else { %>
+        <p>No books found for the specified author.</p>
+        <% } %>
       </div>
       <div class="main-button-container">
         <a id="return-home" href="/">Go back to home</a>

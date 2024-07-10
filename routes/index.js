@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Book = require("../models/book"); // Import the Book model
+const { Op, Sequelize, fn, col } = require("sequelize"); // Import necessary Sequelize functions
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -29,8 +30,62 @@ router.post("/add", async (req, res) => {
     res.status(500).send("Error adding book");
   }
 });
+router.get("/search", async (req, res) => {
+  // Extract author and titl from passed url Query. If eithr is not present assign null.
+  const author = req.query.author ? req.query.author.toLowerCase() : null;
+  const title = req.query.title ? req.query.title.toLowerCase() : null;
+  console.log(`Searching for author: ${author}, title: ${title}`);
 
-/* DELETE remove a book. */
+  try {
+    let books = [];
+
+    if (author && title) {
+      // if both author and title are not null, Search by both author and title
+      books = await Book.findAll({
+        where: {
+          [Op.and]: [
+            // use sequalize lower function to change results to lower case. like function helps to find in-exact
+            // search queries
+            Sequelize.where(fn("lower", col("author")), {
+              [Op.like]: `%${author}%`,
+            }),
+            Sequelize.where(fn("lower", col("title")), {
+              [Op.like]: `%${title}%`,
+            }),
+          ],
+        },
+      });
+    } else if (author) {
+      // If title is null, Search by author only
+      books = await Book.findAll({
+        where: Sequelize.where(fn("lower", col("author")), {
+          [Op.like]: `%${author}%`,
+        }),
+      });
+    } else if (title) {
+      //  if author is null, Search by title only
+      books = await Book.findAll({
+        where: Sequelize.where(fn("lower", col("title")), {
+          [Op.like]: `%${title}%`,
+        }),
+      });
+    } else {
+      // No search parameters provided
+      books = await Book.findAll();
+    }
+    // check if books contains any search results, and return message if empty
+    if (books.length === 0) {
+      console.log("No books found");
+    }
+    // render books to listBook page
+    res.render("listBook", { title: "Search Results", books: books });
+  } catch (error) {
+    console.error("Error searching for books:", error);
+    res.status(500).json({ error: "Error searching for books" });
+  }
+});
+/* DELETE remove a book. Searches for book by author and title, removes book from database
+if found */
 router.delete("/delete", async (req, res) => {
   const { author, title } = req.body;
   try {
