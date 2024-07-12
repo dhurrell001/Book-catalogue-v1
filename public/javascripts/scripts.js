@@ -30,7 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const orignalMessage = message.textContent;
     const originalBackgroundColour = mainBody.style.backgroundColor;
     message.textContent = "Success";
-    mainBody.style.backgroundColor = "green";
+    mainBody.style.backgroundColor = "lightgreen";
+    // Change back to original color and message after 1 second
+    // and reset input boxes
+    setTimeout(() => {
+      mainBody.style.backgroundColor = originalBackgroundColour;
+      message.textContent = orignalMessage;
+      authorInput.value = "";
+      titleInput.value = "";
+    }, 1000);
+  }
+  function failureMessage() {
+    // Alerts user of failed operation by changing background color and status message
+    const orignalMessage = message.textContent;
+    const originalBackgroundColour = mainBody.style.backgroundColor;
+    message.textContent = "Action did not complete";
+    mainBody.style.backgroundColor = "red";
     // Change back to original color and message after 1 second
     setTimeout(() => {
       mainBody.style.backgroundColor = originalBackgroundColour;
@@ -70,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // handle errors in the fetch request
             .catch((error) => {
               console.error("error", error);
+              failureMessage();
             });
         };
         break;
@@ -82,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitButton.onclick = () => {
           const author = authorInput.value;
           const title = titleInput.value;
+
           // check if author and title fields are not blank
           if (author === "" || title === "") {
             alert("Please enter both author and title.");
@@ -96,14 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => response.text())
             .then((data) => {
               console.log(data);
+              successMessage();
             })
             .catch((error) => {
               console.error("error", error);
+              failureMessage();
             });
 
-          alert(
-            `Removing book: Author :${authorInput.value} Title: ${titleInput.value}`
-          );
+          // alert(
+          //   `Removing book: Author :${authorInput.value} Title: ${titleInput.value}`
+          // );
         };
         break;
       case "search":
