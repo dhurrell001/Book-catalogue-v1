@@ -32,9 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     message.textContent = "Success";
     mainBody.style.backgroundColor = "lightgreen";
     // Change back to original color and message after 1 second
+    // and reset input boxes
     setTimeout(() => {
       mainBody.style.backgroundColor = originalBackgroundColour;
       message.textContent = orignalMessage;
+      authorInput.value = "";
+      titleInput.value = "";
     }, 1000);
   }
   function failureMessage() {
